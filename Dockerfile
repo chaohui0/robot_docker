@@ -41,3 +41,6 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV LANG=C.UTF-8
 ENV MPLBACKEND="TkAgg"
+RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+
+
