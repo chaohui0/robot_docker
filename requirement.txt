@@ -1,0 +1,14 @@
+numpy<=1.21.5
+opencv-python
+torch>1.6
+scipy
+matplotlib
+tables
+librosa
+tqdm
+gym
+networkx
+pandas
+pyyaml
+func_timeout
+zmq
