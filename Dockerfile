@@ -9,6 +9,8 @@ COPY Miniconda3-py39_23.1.0-1-Linux-x86_64.sh .
 RUN /bin/bash Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -b && rm Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 ENV PATH=/root/miniconda3/bin:${PATH}
 
+RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN apt update
 COPY requirement.txt .
 RUN pip install -r requirement.txt
 RUN pip install h5py matplotlib numpy pyside2
