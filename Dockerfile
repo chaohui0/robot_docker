@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt update
-RUN apt install -y gcc-10 g++-10 
+RUN apt install -y gcc-10 g++-10
 # 安装miniconda
 
 #wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
@@ -9,12 +9,16 @@ COPY Miniconda3-py39_23.1.0-1-Linux-x86_64.sh .
 RUN /bin/bash Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -b && rm Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 ENV PATH=/root/miniconda3/bin:${PATH}
 
-RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN apt update
+RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 COPY requirement.txt .
 RUN pip install -r requirement.txt
 RUN pip install h5py matplotlib numpy pyside2
-RUN apt-get install -y cmake vim libhdf5-dev libxcb-xinerama0 
+
+RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN  apt-get clean
+RUN apt-get update
+
+RUN apt install -y cmake vim libhdf5-dev libxcb-xinerama0
 RUN sh -c '/bin/echo -e "70" |/bin/echo -e "6"  | /bin/echo -e "y" | apt-get install python3-h5py'
 
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
@@ -37,7 +41,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN sh -c '/bin/echo -e "6"  | apt-get install -y ros-noetic-desktop-full'
 RUN apt install -y  rospack-tools
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-RUN sh -c 'source ~/.bashrc'
+#RUN sh -c 'source ~/.bashrc'
 RUN apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 RUN rosdep init && rosdep update
 
@@ -51,9 +55,8 @@ COPY gazebo.key .
 RUN apt-key add gazebo.key
 # 安装gazebo
 RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
-RUN apt upgrade -y libignition-math2
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV LANG=C.UTF-8
-ENV MPLBACKEND="TkAgg" 
+ENV MPLBACKEND="TkAgg"
