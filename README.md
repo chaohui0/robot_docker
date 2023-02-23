@@ -25,8 +25,10 @@ c++10
 # docker 镜像生成
 
 1.在工程目录下下载所需配置文件
-wget http://packages.osrfoundation.org/gazebo.key
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
+
+    wget http://packages.osrfoundation.org/gazebo.key
+
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 
 2.生成镜像
 docker build -t robot_image_name ./
