@@ -55,6 +55,8 @@ COPY gazebo.key .
 RUN apt-key add gazebo.key
 # 安装gazebo
 RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
+RUN conda install -c conda-forge rospkg empy
+RUN pip install defusedxml
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
