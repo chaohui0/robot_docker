@@ -18,6 +18,7 @@ COPY cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb .
 RUN  dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
 RUN  apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
 RUN apt-get update
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y install cuda && rm cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
 
 COPY cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb .
@@ -44,7 +45,6 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so /usr/lib/x86_64-linux
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 RUN apt update
-ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sh -c '/bin/echo -e "6"  | apt-get install -y ros-noetic-desktop-full'
 RUN apt install -y  rospack-tools
