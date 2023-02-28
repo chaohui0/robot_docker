@@ -9,6 +9,21 @@ COPY Miniconda3-py39_23.1.0-1-Linux-x86_64.sh .
 RUN /bin/bash Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -b && rm Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 ENV PATH=/root/miniconda3/bin:${PATH}
 
+# 安装cuda
+#wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+COPY cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+#wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+COPY cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb .
+RUN  dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+RUN apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
+RUN apt-get update
+RUN apt-get -y install cuda && rm cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+
+COPY cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb .
+RUN dpkg -i libcudnn8_8.0.3.33-1+cuda11.0_amd64.deb && rm cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb
+
+RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.4 -c pytorch
+
 COPY requirement.txt .
 RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirement.txt
 RUN pip install h5py matplotlib numpy pyside2
@@ -52,18 +67,6 @@ RUN conda install -c conda-forge rospkg empy
 RUN pip install defusedxml
 RUN pip install tensorflow tensorboard
 
-# 安装cuda
-#wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
-COPY cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-#wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
-COPY cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb .
-RUN  dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
-RUN apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
-RUN apt-get update
-RUN apt-get -y install cuda && rm cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
-
-COPY cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb .
-RUN dpkg -i libcudnn8_8.0.3.33-1+cuda11.0_amd64.deb && rm cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

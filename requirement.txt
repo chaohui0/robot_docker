@@ -1,5 +1,4 @@
 opencv-python
-torch>1.6
 scipy
 matplotlib
 tables
