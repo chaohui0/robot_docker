@@ -57,6 +57,17 @@ RUN apt-key add gazebo.key
 RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
 RUN conda install -c conda-forge rospkg empy
 RUN pip install defusedxml
+RUN pip install tensorflow tensorboard
+
+# 安装cuda
+#wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+COPY cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+#wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+RUN  dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+RUN apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
+RUN apt-get update
+RUN apt-get -y install cuda
+
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
