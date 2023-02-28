@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y install cuda && rm cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
 
 COPY cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb .
-RUN dpkg -i libcudnn8_8.0.3.33-1+cuda11.0_amd64.deb && rm cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb
+RUN dpkg -i cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb && rm cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb
 
 RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.4 -c pytorch
 
