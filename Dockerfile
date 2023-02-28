@@ -24,7 +24,7 @@ RUN apt-get -y install cuda && rm cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.
 COPY cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb .
 RUN dpkg -i cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb && rm cudnn-local-repo-ubuntu2004-8.8.0.121_1.0-1_amd64.deb
 
-RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.4 -c pytorch
+RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
 
 COPY requirement.txt .
 RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirement.txt
