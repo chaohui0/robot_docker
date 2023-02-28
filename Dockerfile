@@ -9,16 +9,10 @@ COPY Miniconda3-py39_23.1.0-1-Linux-x86_64.sh .
 RUN /bin/bash Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -b && rm Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 ENV PATH=/root/miniconda3/bin:${PATH}
 
-RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 COPY requirement.txt .
-RUN pip install -r requirement.txt
+RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirement.txt
 RUN pip install h5py matplotlib numpy pyside2
-
-RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN  apt-get clean
-RUN apt-get update
-
-RUN apt install -y cmake vim libhdf5-dev libxcb-xinerama0
+RUN apt-get install -y cmake vim libhdf5-dev libxcb-xinerama0
 RUN sh -c '/bin/echo -e "70" |/bin/echo -e "6"  | /bin/echo -e "y" | apt-get install python3-h5py'
 
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
@@ -48,7 +42,6 @@ RUN rosdep init && rosdep update
 # 安装gazebo11
 # 设置镜像
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-
 # 设置Key
 #wget http://packages.osrfoundation.org/gazebo.key
 COPY gazebo.key .
@@ -67,7 +60,6 @@ RUN  dpkg -i cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
 RUN apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
 RUN apt-get update
 RUN apt-get -y install cuda
-
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

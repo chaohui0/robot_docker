@@ -36,4 +36,4 @@ c++10
 
 3.docker container生成示例
 
-    docker run -dti  --entrypoint='bash'  --net=host --env="DISPLAY"  -v /data/$USER:/data/workspace  --volume="/home/$USER/.Xauthority:/root/.Xauthority:rw"  --name ${USER}_container robot_image_name
+    docker run -dti  --entrypoint='bash'  --net=host --env="DISPLAY"  -v /data/$USER:/data/workspace  --volume="/home/$USER/.Xauthority:/root/.Xauthority:rw" --device /dev/nvidia0  --name ${USER}_container robot_image_name
