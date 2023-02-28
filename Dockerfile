@@ -28,7 +28,7 @@ RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoo
 
 COPY requirement.txt .
 RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir -r requirement.txt
-RUN pip install h5py matplotlib numpy pyside2
+RUN pip install -i https://mirrors.aliyun.com/pypi/simple/ h5py matplotlib numpy pyside2
 RUN apt-get install -y cmake vim libhdf5-dev libxcb-xinerama0
 RUN sh -c '/bin/echo -e "70" |/bin/echo -e "6"  | /bin/echo -e "y" | apt-get install python3-h5py'
 
