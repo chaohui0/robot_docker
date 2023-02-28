@@ -9,6 +9,7 @@ COPY Miniconda3-py39_23.1.0-1-Linux-x86_64.sh .
 RUN /bin/bash Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -b && rm Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 ENV PATH=/root/miniconda3/bin:${PATH}
 
+RUN apt-get install -y lsb-release gnupg2 curl && apt-get clean all
 # 安装cuda
 #wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 COPY cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -38,8 +39,6 @@ ENV LD_LIBRARY_PATH=/root/miniconda3/pkgs/libstdcxx-ng-11.2.0-h1234567_1/lib/:${
 RUN apt-get install ffmpeg libsm6 libxext6 libgl1 -y
 
 RUN ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so /usr/lib/x86_64-linux-gnu/libhdf5.so.200 && ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5_cpp.so /usr/lib/x86_64-linux-gnu/libhdf5_cpp.so.200
-
-RUN apt-get install -y lsb-release gnupg2 curl && apt-get clean all
 
 # 安装ros
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
