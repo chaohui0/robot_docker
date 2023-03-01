@@ -44,7 +44,7 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so /usr/lib/x86_64-linux
 # 安装ros
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
-RUN apt-key add /var/cuda-repo-ubuntu2004-11-4-local/7fa2af80.pub
+RUN cp /var/cudnn-local-repo-ubuntu2004-8.8.0.121/*.gpg /usr/share/keyrings/
 RUN apt update
 RUN apt-get install -y ros-noetic-desktop-full
 RUN apt install -y  rospack-tools
