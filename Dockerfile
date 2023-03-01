@@ -41,29 +41,29 @@ RUN apt-get install ffmpeg libsm6 libxext6 libgl1 -y
 
 RUN ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so /usr/lib/x86_64-linux-gnu/libhdf5.so.200 && ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5_cpp.so /usr/lib/x86_64-linux-gnu/libhdf5_cpp.so.200
 
-# 安装ros
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+# # 安装ros
+# RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+# RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 
-RUN apt-get install -y ros-noetic-desktop-full
-RUN apt install -y  rospack-tools
-RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-#RUN sh -c 'source ~/.bashrc'
-RUN apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
-RUN rosdep init && rosdep update
+# RUN apt-get install -y ros-noetic-desktop-full
+# RUN apt install -y  rospack-tools
+# RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+# #RUN sh -c 'source ~/.bashrc'
+# RUN apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+# RUN rosdep init && rosdep update
 
-# 安装gazebo11
-# 设置镜像
-RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-# 设置Key
-#wget http://packages.osrfoundation.org/gazebo.key
-COPY gazebo.key .
-RUN apt-key add gazebo.key
-# 安装gazebo
-RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
-RUN conda install -c conda-forge rospkg empy
-RUN pip install defusedxml
-RUN pip install tensorflow tensorboard
+# # 安装gazebo11
+# # 设置镜像
+# RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+# # 设置Key
+# #wget http://packages.osrfoundation.org/gazebo.key
+# COPY gazebo.key .
+# RUN apt-key add gazebo.key
+# # 安装gazebo
+# RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
+# RUN conda install -c conda-forge rospkg empy
+# RUN pip install defusedxml
+# RUN pip install tensorflow tensorboard
 
 
 ENV TZ=Asia/Shanghai
