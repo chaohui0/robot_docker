@@ -45,7 +45,10 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so /usr/lib/x86_64-linux
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 RUN cp /var/cudnn-local-repo-ubuntu2004-8.8.0.121/*.gpg /usr/share/keyrings/
+COPY gazebo.key .
+RUN apt-key add gazebo.key
 RUN apt update
+
 RUN apt-get install -y ros-noetic-desktop-full
 RUN apt install -y  rospack-tools
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
@@ -58,14 +61,12 @@ RUN rosdep init && rosdep update
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 # 设置Key
 #wget http://packages.osrfoundation.org/gazebo.key
-COPY gazebo.key .
-RUN apt-key add gazebo.key
+
 # 安装gazebo
-RUN apt update &&  apt install -y gazebo11 libgazebo11-dev
+RUN apt install -y gazebo11 libgazebo11-dev
 RUN conda install -c conda-forge rospkg empy
 RUN pip install defusedxml shapely
 RUN pip install tensorflow tensorboard
-
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
