@@ -21,6 +21,10 @@ python3.9
 
 c++10
 
+cuda11.4 + cudnn8.8
+
+pytorch==1.12.1
+
 
 # docker 镜像生成及使用
 
