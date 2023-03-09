@@ -29,6 +29,10 @@ pytorch==1.12.1
 # docker 镜像生成及使用
 
 1.在工程目录下下载所需配置文件
+    
+    wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-ubuntu2004-11-4-local_11.4.0-470.42.01-1_amd64.deb
+
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 
     wget http://packages.osrfoundation.org/gazebo.key
 
